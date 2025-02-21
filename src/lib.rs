@@ -193,7 +193,7 @@ pub fn probe() -> ProbeResult {
                 result.cert_dir = Some(cert_dir);
             }
         }
-        if result.cert_file.is_some() && result.cert_dir.is_some() {
+        if result.cert_file.is_some() || result.cert_dir.is_some() {
             break;
         }
     }
