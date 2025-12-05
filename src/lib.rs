@@ -141,10 +141,12 @@ const CERTIFICATE_DIRS: &[&str] = &[
     "/etc/security/certificates", // OpenHarmony, https://developer.huawei.com/consumer/en/doc/best-practices/bpta-network-ca-security#section121091116142117
 ];
 
+// `*/etc/ssl/certs` is the default TRUSTDESTDIR (15+)/CERTDESTDIR (<15) for `certctl(8)`
+// https://man.freebsd.org/cgi/man.cgi?query=certctl&sektion=8
 #[cfg(target_os = "freebsd")]
 const CERTIFICATE_DIRS: &[&str] = &[
-    "/etc/ssl/certs",         // FreeBSD 12.2+,
-    "/usr/local/share/certs", // FreeBSD
+    "/etc/ssl/certs",
+    "/usr/local/etc/ssl/certs",
 ];
 
 #[cfg(any(target_os = "illumos", target_os = "solaris"))]
@@ -178,8 +180,13 @@ const CERTIFICATE_FILE_NAMES: &[&str] = &[
     "/etc/ssl/certs/cacert.pem", // OpenHarmony, https://developer.huawei.com/consumer/en/doc/harmonyos-faqs/faqs-network-41
 ];
 
+// `*/etc/ssl/cert.pem` is the default BUNDLE (15+) for `certctl(8)`
+// https://man.freebsd.org/cgi/man.cgi?query=certctl&sektion=8
 #[cfg(target_os = "freebsd")]
-const CERTIFICATE_FILE_NAMES: &[&str] = &["/usr/local/etc/ssl/cert.pem"];
+const CERTIFICATE_FILE_NAMES: &[&str] = &[
+    "/etc/ssl/cert.pem",
+    "/usr/local/etc/ssl/cert.pem",
+];
 
 #[cfg(target_os = "dragonfly")]
 const CERTIFICATE_FILE_NAMES: &[&str] = &["/usr/local/share/certs/ca-root-nss.crt"];
